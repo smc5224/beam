@@ -1,5 +1,5 @@
-name: my_flutter_app
-description: "A new Flutter project."
+name: beam
+description: "beam project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.7.2
+  sdk: 3.8.1
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -58,18 +58,30 @@ flutter:
   uses-material-design: true
   
   assets:
-    - assets/image1.png
-    - assets/banner.png
-    - assets/Frame 4.png
-    - assets/beam_logo.png
-    - assets/mdi_film.png
-    - assets/shop.png
-    - assets/mypage.png
+    - assets/images/image1.png
+    - assets/images/banner.png
+    - assets/images/home.png
+    - assets/images/beam_logo.png
+    - assets/images/film1.png
+    - assets/images/gray_situation.png
+    - assets/images/gray_mypage.png
+    - assets/images/beam.png
+    - assets/images/film_10.png
+    - assets/images/film_100.png
+    - assets/images/film_1100.png
+    - assets/images/film_11000.png
+    - assets/images/black_situation.png
+    - assets/images/black_mypage.png
+    - assets/images/coin.png
+    - assets/images/film2.png
 
   fonts:
     - family: Pretendard
       fonts:
         - asset: assets/fonts/Pretendard-Regular.otf
+          weight: 400
+        - asset: assets/fonts/Pretendard-SemiBold.otf
+          weight: 600
         - asset: assets/fonts/Pretendard-Bold.otf
           weight: 700
 
