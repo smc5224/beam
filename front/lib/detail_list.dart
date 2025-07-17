@@ -64,7 +64,8 @@ class DetailListPage extends StatelessWidget {
                         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 4),
-                      const Text('주연배우 - 고윤정, 정조원, 신시아'),
+                      const Text('주연배우 - 고윤정, 정조원, 신시아',
+                      style: TextStyle(fontSize: 16),),
                       const SizedBox(height: 12),
                       Align(
                         alignment: Alignment.centerRight,
