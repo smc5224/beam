@@ -74,6 +74,7 @@ flutter:
     - assets/images/black_mypage.png
     - assets/images/coin.png
     - assets/images/film2.png
+    - assets/images/investment_banner.png
 
   fonts:
     - family: Pretendard
