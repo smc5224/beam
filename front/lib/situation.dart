@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home.dart';
 import 'my.dart';
+import 'detail_situation.dart';
 
 class SituationPage extends StatelessWidget {
   const SituationPage({super.key});
@@ -46,97 +47,64 @@ class SituationPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Card(
-              color: Colors.white,
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-                side: const BorderSide(
-                  color: Color(0xFFE0E0E0),
-                  width: 1.0,
-                ), // 테두리 추가
-              ),
-              child: const ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: Color(0xFFF0F0F0), // 회색 배경
-                  // 만약 assets/film_reel_icon.png 이미지가 있다면 Image.asset으로 대체
-                  child: Icon(Icons.movie, color: Color(0xFF1C1C1C)),
-                ),
-                title: Text(
-                  '언젠가는 슬기로운 전공의...',
-                  style: TextStyle(
-                    fontFamily: 'Pretendard',
-                    fontWeight: FontWeight.normal,
-                    color: Color(0xFF000000),
-                    fontSize: 14
-                  ),
-                ),
-                subtitle: Text(
-                  '200필름',
-                  style: TextStyle(
-                    fontFamily: 'Pretendard',
-                    color: Colors.grey,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w300
-                  ),
-                ),
-                trailing: Text(
-                  '배급중',
-                  style: TextStyle(
-                    fontFamily: 'Pretendard',
-                    fontWeight: FontWeight.w600, // 배급중 글자만 굵게
-                    color: Color(0xFF000000),
-                    fontSize: 15
-                  ),
-                ),
-              ),
-            ),
-            // 투자 현황 목록 아이템 2
-            Card(
-              color: Colors.white,
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-                side: const BorderSide(color: Color(0xFFE0E0E0), width: 1.0),
-              ),
-              child: const ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: Color(0xFFF0F0F0),
-                  // 만약 assets/another_film_icon.png 이미지가 있다면 Image.asset으로 대체
-                  child: Icon(
-                    Icons.movie_creation_outlined,
-                    color: Color(0xFF1C1C1C),
-                  ),
-                ),
-                title: Text(
-                  '전 남친 물고기는 어디에 살...',
-                  style: TextStyle(
-                    fontFamily: 'Pretendard',
-                    fontWeight: FontWeight.normal,
-                    color: Color(0xFF000000),
-                    fontSize: 14
-                  ),
-                ),
-                subtitle: Text(
-                  '100필름',
-                  style: TextStyle(
-                    fontFamily: 'Pretendard',
-                    color: Colors.grey,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w300
-                  ),
-                ),
-                trailing: Text(
-                  '회수 완료',
-                  style: TextStyle(
-                    fontFamily: 'Pretendard',
-                    fontWeight: FontWeight.w600, // 배급중 글자만 굵게
-                    color: Color(0xFF000000),
-                    fontSize: 15
-                  ),
-                ),
-              ),
-            ),
+            // 첫 번째 투자 항목
+Card(
+  color: Colors.white,
+  elevation: 0,
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(12),
+    side: const BorderSide(
+      color: Color(0xFFE0E0E0),
+      width: 1.0,
+    ),
+  ),
+  child: ListTile(
+    leading: ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: Image.asset(
+        'assets/images/investment_situation_banner1.png',
+        width: 40,
+        height: 40,
+        fit: BoxFit.cover,
+      ),
+    ),
+    title: const Text(
+      '언젠가는 슬기로운 전공의...',
+      style: TextStyle(
+        fontFamily: 'Pretendard',
+        fontWeight: FontWeight.normal,
+        color: Color(0xFF000000),
+        fontSize: 14,
+      ),
+    ),
+    subtitle: const Text(
+      '200필름',
+      style: TextStyle(
+        fontFamily: 'Pretendard',
+        color: Colors.grey,
+        fontSize: 13,
+        fontWeight: FontWeight.w300,
+      ),
+    ),
+    trailing: const Text(
+      '배급중',
+      style: TextStyle(
+        fontFamily: 'Pretendard',
+        fontWeight: FontWeight.w600,
+        color: Color(0xFF000000),
+        fontSize: 15,
+      ),
+    ),
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const DetailSituationPage()),
+      );
+    },
+  ),
+),
+
+
           ]
       ),
       ),

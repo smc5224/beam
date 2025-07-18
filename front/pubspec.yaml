@@ -75,6 +75,9 @@ flutter:
     - assets/images/coin.png
     - assets/images/film2.png
     - assets/images/investment_banner.png
+    - assets/images/investment_situation_banner1.png
+    - assets/images/popcorn_empty.png
+    - assets/images/popcorn_full.png
 
   fonts:
     - family: Pretendard
