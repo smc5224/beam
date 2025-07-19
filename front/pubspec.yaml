@@ -78,6 +78,7 @@ flutter:
     - assets/images/investment_situation_banner1.png
     - assets/images/popcorn_empty.png
     - assets/images/popcorn_full.png
+    - assets/images/mdi_film.png
 
   fonts:
     - family: Pretendard

@@ -3,20 +3,29 @@ import 'package:flutter/material.dart';
 final int participantCount = 632;
 final int amount = 100000000;
 final int myFilm = 100;
-final int recoveryStep = 8; // 1~8 단계로 팝콘 상태 표현 가능 (예: 8이면 회수 완료)
+final int recoveryStep = 7;
+
+final List<String> recoveryLabels = [
+  '기획 중',
+  '준비 중',
+  '촬영 중',
+  '편집 중',
+  '배급 중',
+  '공개 중',
+  '정산 중',
+  '회수 완료',
+];
 
 class DetailSituationPage extends StatelessWidget {
   const DetailSituationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-
-    String popcornImage = 'assets/images/popcorn_full.png'; // 기본 회수 완료
-
-    // 회수 단계에 따른 팝콘 이미지 파일명 설정
-    if (recoveryStep < 8 && recoveryStep >= 1) {
-      popcornImage = 'assets/images/popcorn_step$recoveryStep.png';
-    }
+    final String popcornImage = recoveryStep == 0
+        ? 'assets/images/popcorn_empty.png'
+        : (recoveryStep < 7
+            ? 'assets/images/popcorn_step$recoveryStep.png'
+            : 'assets/images/popcorn_full.png');
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
@@ -99,7 +108,7 @@ class DetailSituationPage extends StatelessWidget {
                               text: TextSpan(
                                 children: [
                                   TextSpan(
-                                    text:  '${amount.toString()}',
+                                    text: '${amount.toString()}',
                                     style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
                                   ),
                                   const TextSpan(
@@ -127,39 +136,20 @@ class DetailSituationPage extends StatelessWidget {
                       padding: const EdgeInsets.only(right: 16),
                       child: Row(
                         children: [
-                          Text('$myFilm', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                          Image.asset('assets/images/mdi_film.png', width: 24, height: 24),
                           const SizedBox(width: 4),
-                          Image.asset('assets/images/film2.png', width: 24, height: 24),
+                          Text('$myFilm', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                         ],
                       ),
                     )
                   ],
                 ),
                 const SectionDivider(),
+                RecoveryProgressBar(currentStep: recoveryStep, stepLabels: recoveryLabels),
                 const SectionTitle('투자금 회수 상태'),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
-                        child: Image.asset(popcornImage),
-                      ),
-                      const SizedBox(height: 12),
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
-                        ),
-                        child: const Text(
-                          '투자금 회수하기',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: PopcornRecoverySection(imagePath: popcornImage),
                 ),
                 const SizedBox(height: 100),
               ],
@@ -173,12 +163,11 @@ class DetailSituationPage extends StatelessWidget {
 
 class SectionDivider extends StatelessWidget {
   const SectionDivider({super.key});
-
   @override
   Widget build(BuildContext context) {
     return const Divider(
       height: 32,
-      thickness: 7,
+      thickness: 4,
       color: Color(0xFFF6F6F6),
     );
   }
@@ -186,17 +175,126 @@ class SectionDivider extends StatelessWidget {
 
 class SectionTitle extends StatelessWidget {
   final String title;
-
   const SectionTitle(this.title, {super.key});
-
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Text(
-        title,
-        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      child: Text(title, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+    );
+  }
+}
+
+class RecoveryProgressBar extends StatelessWidget {
+  final int currentStep;
+  final List<String> stepLabels;
+  const RecoveryProgressBar({super.key, required this.currentStep, required this.stepLabels});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text('진행 상태', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+          const SizedBox(height: 12),
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              Align(
+                alignment: Alignment.center,
+                child: Container(
+                  height: 1, // 정말 얇은 선
+                  color: const Color(0xFFE0E0E0),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: List.generate(stepLabels.length, (index) {
+                  final isCurrent = index == currentStep;
+                  return Column(
+  children: [
+    Container(
+      width: 12,
+      height: 12,
+      decoration: BoxDecoration(
+        color: isCurrent ? Colors.red : Colors.white,
+        border: Border.all(color: Colors.grey),
+        shape: BoxShape.circle,
       ),
+    ),
+    const SizedBox(height: 1),
+    Text(
+      stepLabels[index],
+      style: TextStyle(
+        fontSize: 12,
+        color: isCurrent ? Colors.red : Colors.transparent, // 안 보이게
+      ),
+    ),
+  ],
+);
+
+                }),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class PopcornRecoverySection extends StatefulWidget {
+  final String imagePath;
+  const PopcornRecoverySection({super.key, required this.imagePath});
+
+  @override
+  State<PopcornRecoverySection> createState() => _PopcornRecoverySectionState();
+}
+
+class _PopcornRecoverySectionState extends State<PopcornRecoverySection> {
+  bool isCovered = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Image.asset(widget.imagePath),
+        ),
+        if (isCovered)
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.7),
+                borderRadius: BorderRadius.circular(16),
+              ),
+            ),
+          ),
+        if (isCovered)
+          Positioned.fill(
+            child: Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    isCovered = false;
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+                ),
+                child: const Text(
+                  '투자금 회수하기',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                ),
+              ),
+            ),
+          ),
+      ],
     );
   }
 }
